@@ -60,7 +60,7 @@ const itemSchema = new mongoose.Schema({
     itemSize:{
         type:Number,
         required:true,
-        default:1
+        default:10
     },
 
     buyPrice:{

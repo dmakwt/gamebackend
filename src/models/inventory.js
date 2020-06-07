@@ -23,7 +23,7 @@ const inventorySchema = new mongoose.Schema({
     size:{
         type:Number,
         required:true,
-        default:15
+        default:500
     },
 
     bag:{
