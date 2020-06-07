@@ -33,6 +33,19 @@ const userSchema = new mongoose.Schema({
         minlength: 6,
     },
 
+    banned:{
+        type:Boolean,
+        default: false
+    },
+
+    bannedDate:{
+        type: Date
+    },
+
+    bannedReason:{
+        type:String
+    },
+
     token: {
         type: String,
         required: true
