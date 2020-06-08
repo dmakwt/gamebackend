@@ -103,37 +103,31 @@ const profileSchema = new mongoose.Schema({
         strength: {
             _id: false,
             type: Number,
-            required: true,
             default: 10
         },
         defence: {
             _id: false,
             type: Number,
-            required: true,
             default: 10
         },
         agility: {
             _id: false,
             type: Number,
-            required: true,
             default: 10
         },
         constitution: {
             _id: false,
             type: Number,
-            required: true,
             default: 10
         },
         intelligence: {
             _id: false,
             type: Number,
-            required: true,
             default: 10
         },
         luck: {
             _id: false,
             type: Number,
-            required: true,
             default: 10
         }
     },
@@ -190,6 +184,7 @@ const profileSchema = new mongoose.Schema({
 },
     {
         timestamps: true,
+        _id: false
     }
 
 )

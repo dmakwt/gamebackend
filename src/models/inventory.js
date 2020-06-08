@@ -21,7 +21,6 @@ const inventorySchema = new mongoose.Schema({
 
     size:{
         type:Number,
-        required:true,
         default:500
     },
 
@@ -33,6 +32,7 @@ const inventorySchema = new mongoose.Schema({
 },
     {
         timestamps: true,
+        _id: false
     }
 
 )

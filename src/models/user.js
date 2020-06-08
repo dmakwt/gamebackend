@@ -36,7 +36,6 @@ const userSchema = new mongoose.Schema({
 
     server:{
         type:String,
-        required:true,
         default:'serverONE'
     
     },
@@ -55,8 +54,7 @@ const userSchema = new mongoose.Schema({
     },
 
     token: {
-        type: String,
-        required: true
+        type: String
     },
 
 },
@@ -71,18 +69,19 @@ const userSchema = new mongoose.Schema({
 
 
 
-userSchema.methods.generateAuthToken = async function(){
+userSchema.methods.generateAuthToken = async function () {
     const user = this
-    const token = jwt.sign({_id: user._id.toString()}, process.env.JWT_SECRET)
+    const token = jwt.sign({ _id: user._id.toString() },process.env.JWT_SECRET)
 
     user.token = token
-
+    await user.save()
     return token
+
 }
 
 
 userSchema.statics.findByCredentials = async (email, password)=>{
-    const user = await User.findById({email})
+    const user = await User.findOne({ email: email })
 
     if(!user){
         throw new Error('Unable to login')
@@ -90,6 +89,10 @@ userSchema.statics.findByCredentials = async (email, password)=>{
 
     const isMatch = await bcrypt.compare(password, user.password)
 
+    if (!isMatch) {
+        throw new Error('Unable to login')
+    }
+    
     return user
 }
 
