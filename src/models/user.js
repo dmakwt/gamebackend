@@ -34,6 +34,13 @@ const userSchema = new mongoose.Schema({
         minlength: 6,
     },
 
+    server:{
+        type:String,
+        required:true,
+        default:'serverONE'
+    
+    },
+
     banned:{
         type:Boolean,
         default: false

@@ -24,12 +24,12 @@ const profileSchema = new mongoose.Schema({
         type: String,
         trim: true,
     },
-    
+
 
     bio: {
         type: String,
         trim: true,
-        maxlength:255
+        maxlength: 255
     },
 
     hp: {
@@ -45,13 +45,13 @@ const profileSchema = new mongoose.Schema({
     },
 
     level: {
-        type: INT,
+        type: Number,
         required: true,
         default: 0,
-        validate : {
-            validator : Number.isInteger,
-            message   : '{VALUE} is not an integer value'
-          }
+        validate: {
+            validator: Number.isInteger,
+            message: '{VALUE} is not an integer value'
+        }
     },
 
     xp: {
@@ -60,6 +60,14 @@ const profileSchema = new mongoose.Schema({
         default: 0
     },
 
+    skillPoints:{
+        type: Number,
+        default: 0,
+        validate: {
+            validator: Number.isInteger,
+            message: '{VALUE} is not an integer value'
+        }
+    },
     honor: {
         type: Number,
         required: true,
@@ -73,55 +81,106 @@ const profileSchema = new mongoose.Schema({
     },
 
     wins: {
-        type: INT,
+        type: Number,
         required: true,
         default: 0,
-        validate : {
-            validator : Number.isInteger,
-            message   : '{VALUE} is not an integer value'
-          }
+        validate: {
+            validator: Number.isInteger,
+            message: '{VALUE} is not an integer value'
+        }
     },
     loses: {
-        type: INT,
+        type: Number,
         required: true,
         default: 0,
-        validate : {
-            validator : Number.isInteger,
-            message   : '{VALUE} is not an integer value'
-          }
-    },
-
-    userSkills:{
-        type:Map,
-        required:true,
-        default: 
-        {
-        "strength":0,
-        "armour":0,
-        "agility":0,
-        "constitution":0,
-        "intelligence":0,
-        "luck":0,
+        validate: {
+            validator: Number.isInteger,
+            message: '{VALUE} is not an integer value'
         }
     },
 
-    usedItems:{
-        type:Map,
-        of:String,
-        required:true,
-        default: 
-        {
-        "helmet":"",
-        "chest":"",
-        "pants":"",
-        "shoes":"",
-        "weapon":"",
-        "armor":"",
-        "gloves":"",
-        "ring":"",
+    userSkills: {
+        strength: {
+            _id: false,
+            type: Number,
+            required: true,
+            default: 10
+        },
+        defence: {
+            _id: false,
+            type: Number,
+            required: true,
+            default: 10
+        },
+        agility: {
+            _id: false,
+            type: Number,
+            required: true,
+            default: 10
+        },
+        constitution: {
+            _id: false,
+            type: Number,
+            required: true,
+            default: 10
+        },
+        intelligence: {
+            _id: false,
+            type: Number,
+            required: true,
+            default: 10
+        },
+        luck: {
+            _id: false,
+            type: Number,
+            required: true,
+            default: 10
+        }
+    },
+
+    usedItems: {
+        helmet: {
+            _id: false,
+            type: String,
+            default: ''
+        },
+        chest: {
+            _id: false,
+            type: String,
+            default: ''
+        },
+        pants: {
+            _id: false,
+            type: String,
+            default: ''
+        },
+        shoes: {
+            _id: false,
+            type: String,
+            default: ''
+        },
+        weapon: {
+            _id: false,
+            type: String,
+            default: ''
+        },
+        shield: {
+            _id: false,
+            type: String,
+            default: ''
+        },
+        gloves: {
+            _id: false,
+            type: String,
+            default: ''
+        },
+        ring: {
+            _id: false,
+            type: String,
+            default: ''
         }
     }
-    
+
 
 
 

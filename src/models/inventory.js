@@ -16,7 +16,6 @@ const inventorySchema = new mongoose.Schema({
 
     items:{
         type:Array,
-        required:true,
         default:[]
     },
 
