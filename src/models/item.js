@@ -18,37 +18,77 @@ const itemSchema = new mongoose.Schema({
     nameEN:{
         type:String,
         required:true,
-        unique:true
     },
     nameAR:{
         type:String,
         required:true,
-        unique:true
+    },
+
+    deceriptionEN:{
+        type:String
+    },
+    deceriptionAR:{
+        type:String
     },
     colors:{
         type:Array,
         required:true,
-        default:[0,'#000000','#000000']
+        default:[0,'#000000','#000000'] //[Opacity,Color1,Color2,...]
     },
 
     itemSkills:{
-        type:Map,
-        required:true,
-        default: 
-        {
-        "strength":0,
-        "armour":0,
-        "agility":0,
-        "constitution":0,
-        "intelligence":0,
-        "luck":0,
-        "health":0,
-        "energy":0
+        strength:{
+            _id:false,
+            type:Number,
+            required:true,
+            default:10
+        },
+        defence:{
+            _id:false,
+            type:Number,
+            required:true,
+            default:10
+        },
+        agility:{
+            _id:false,
+            type:Number,
+            required:true,
+            default:10
+        },
+        constitution:{
+            _id:false,
+            type:Number,
+            required:true,
+            default:10
+        },
+        intelligence:{
+            _id:false,
+            type:Number,
+            required:true,
+            default:10
+        },
+        luck:{
+            _id:false,
+            type:Number,
+            required:true,
+            default:10
+        },
+        health:{
+            _id:false,
+            type:Number,
+            required:true,
+            default:10
+        },
+        energy:{
+            _id:false,
+            type:Number,
+            required:true,
+            default:10
         }
     },
 
     minRequiredLVL:{
-        type: INT,
+        type: Number,
         required: true,
         default: 0,
         validate : {
