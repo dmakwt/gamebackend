@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <title>Reset Password</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+</head>
+
+<body class="bg-secondary">
+
+
+
+    <br>
+    <div class="container">
+
+
+        <div class="alert alert-light" role="alert">
+            Username: <div class="font-weight-bold text-dark"><%= name %> </div>
+            Email: <div class="font-weight-bold text-dark"><%= email %></div>
+        </div>
+
+
+
+
+        <div class="card">
+            <div class="card-header">
+                Reset Password
+            </div>
+            <div class="card-body">
+
+                <form id="form">
+                    <input type="password" class="input-lg form-control" name="password1" id="password1"
+                        placeholder="New Password" autocomplete="off">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <span id="8char" class="glyphicon glyphicon-remove" style="color:#FF0004;"></span> 6
+                            Characters Long<br>
+                            
+                        </div>
+                        
+                    </div>
+                    <input type="password" class="input-lg form-control" name="password2" id="password2"
+                        placeholder="Repeat Password" autocomplete="off">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <span id="pwmatch" class="glyphicon glyphicon-remove" style="color:#FF0004;"></span>
+                            Passwords Match
+                        </div>
+
+                    </div>
+                    <input id="btn" type="submit" class="col-xs-12 btn btn-secondary btn-load btn-lg"
+                        data-loading-text="Changing Password..." value="Change Password">
+
+                </form>
+            </div>
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet"
+            id="bootstrap-css">
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="/js/inputvalid.js"></script>
+        <script src="/js/reset.js"></script>
+
+
+</body>
+
+</html>
