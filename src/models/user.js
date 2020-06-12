@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const uniqueValidator = require('mongoose-unique-validator');
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
@@ -77,7 +78,7 @@ const userSchema = new mongoose.Schema({
     }
 
 )
-
+userSchema.plugin(uniqueValidator);
 
 userSchema.methods.generatePasswordReset = async function() {
    const user = this
