@@ -48,12 +48,9 @@ router.post('/users/signup', async (req, res) => {
         res.status(201).send({ token })
 
     } catch (error) {
-        if (error.code === 11000) {
-            const field = Object.keys(error.keyValue)[0]
-            return res.status(400).send({ error, message: `${field} must be unique` })
-        }
+    
 
-        res.status(400).send(error)
+        res.status(400).send({error:error.message})
     }
 });
 
