@@ -1,0 +1,63 @@
+.body{
+    background-color: rgb(20, 16, 13);
+}
+
+
+.nameemail{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.img{
+    max-width: 30%;
+  height: auto;
+  margin-top: 50px;
+  opacity: 20%;
+}
+.input-lg{
+margin-top: 15px;
+
+}
+
+.card{
+    background-color: rgb(255, 255, 255);
+    color: rgb(119, 119, 119);
+    border-radius: 25px;
+    padding: 25px;
+    margin-top: 30px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.card-header{
+    border:none;
+    background-color: rgb(221, 221, 221);
+}
+
+
+
+.btn-secondary{
+    background-color:  #4CAF50;
+    border:none;
+    color: rgb(255, 255, 255);
+    outline: none;
+    margin-top: 25px;
+    border-radius: 25px;
+
+    
+}
+
+
+
+.btn-secondary:disabled {
+   background-color: rgb(221, 221, 221);
+   color: rgb(167, 167, 167);
+   opacity: 10%;
+   outline: none;
+   border: none;
+   margin-top: 25px;
+  }
+
+  .copyrighttext{
+      color: rgba(255, 255, 255, 0.404);
+  }

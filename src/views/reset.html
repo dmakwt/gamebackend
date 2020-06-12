@@ -8,28 +8,33 @@
 
 
     <title>Reset Password</title>
+    
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
 
 </head>
 
-<body class="bg-secondary">
+<body class="body " >
 
 
 
     <br>
-    <div class="container">
+    <br>
+    
+    <div class="container ">
+        
+        
 
 
-        <div class="alert alert-light" role="alert">
-            Username: <div class="font-weight-bold text-dark"><%= name %> </div>
-            Email: <div class="font-weight-bold text-dark"><%= email %></div>
+        <div class="card">
+            Username: <div class="font-weight-bold text-dark nameemail"><%= name %> </div>
+            Email: <div class="font-weight-bold text-dark nameemail"><%= email %></div>
         </div>
-
-
-
+        
 
         <div class="card">
             <div class="card-header">
@@ -44,9 +49,9 @@
                         <div class="col-sm-6">
                             <span id="8char" class="glyphicon glyphicon-remove" style="color:#FF0004;"></span> 6
                             Characters Long<br>
-                            
+
                         </div>
-                        
+
                     </div>
                     <input type="password" class="input-lg form-control" name="password2" id="password2"
                         placeholder="Repeat Password" autocomplete="off">
@@ -57,19 +62,25 @@
                         </div>
 
                     </div>
-                    <input id="btn" type="submit" class="col-xs-12 btn btn-secondary btn-load btn-lg"
-                        data-loading-text="Changing Password..." value="Change Password">
+                    <input id="btn" type="submit" class="col-xs-12 btn btn-secondary  btn-lg"
+                        data-loading-text="Changing Password..." value="Change Password" disabled>
 
                 </form>
             </div>
 
         </div>
+        <!-- btn btn-secondary  btn-lg -->
+
+
+<div class="container">
 
 
 
+    <div id="gamename" class="text-center fixed-bottom copyrighttext"></div>
 
 
-
+</div>
+       
 
 
 
@@ -97,7 +108,7 @@
         <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
         <script src="/js/inputvalid.js"></script>
         <script src="/js/reset.js"></script>
-
+        <script src="/js/game_info.js"></script>
 
 </body>
 
