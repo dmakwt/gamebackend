@@ -1,3 +1,7 @@
+
+const loaderDiv = document.querySelector('#loader')
+
+
 const resetPasswordAPI = async()=>{
 
 	try {
@@ -23,17 +27,30 @@ const resetPasswordAPI = async()=>{
 
 
 
+const linkTokenDeleter= ()=>{
+	const windowLink = window.location.href
+	const userWordPos = windowLink.search('users/reset/')
+	const linkWOtoken = windowLink.slice(0, userWordPos+5);
+	const neededLink = `${linkWOtoken}/successful`
+
+
+	return neededLink
+}
 
 
 
 form.addEventListener('submit', async(e) => {
 	e.preventDefault()
+	loaderDiv.className = 'loader'
 	const responseStatus = await resetPasswordAPI()
 
-	//handle succesful fetch [[     URL NEED TO BE CHANGE   ]]
+	
+
 	if(responseStatus === 200){
-		const link = `${process.env.APP_URL}/users/successful`
-		window.location.href = link;
+		setTimeout(() => {
+			window.location.href = linkTokenDeleter();
+		}, 500);
+		
 	}
 	else{
 		location.reload();
