@@ -32,7 +32,7 @@ form.addEventListener('submit', async(e) => {
 
 	//handle succesful fetch [[     URL NEED TO BE CHANGE   ]]
 	if(responseStatus === 200){
-		const link = "http://localhost:3000/users/successful"
+		const link = `${process.env.APP_URL}/users/successful`
 		window.location.href = link;
 	}
 	else{
