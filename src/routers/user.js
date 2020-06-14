@@ -59,6 +59,12 @@ router.post('/users/login', async (req, res) => {
 
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
+
+        if(user.banned === true){
+            return res.status(403).send({error:'Accound is banned'})
+        }
+
+
         const token = await user.generateAuthToken()
 
         user.token = token
