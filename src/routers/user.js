@@ -48,9 +48,9 @@ router.post('/users/signup', async (req, res) => {
         res.status(201).send({ token })
 
     } catch (error) {
-    
 
-        res.status(400).send({error:error.message})
+
+        res.status(400).send({ error: error.message })
     }
 });
 
@@ -60,8 +60,8 @@ router.post('/users/login', async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
 
-        if(user.banned === true){
-            return res.status(403).send({error:'Accound is banned'})
+        if (user.banned === true) {
+            return res.status(403).send({ error: 'Accound is banned' })
         }
 
 
@@ -92,6 +92,14 @@ router.post('/users/logout', auth, async (req, res) => {
 
 })
 
+router.get('/users/check', auth, async (req, res) => {
+    try {
+        res.send()
+    } catch (error) {
+        res.status(500).send()
+    }
+
+})
 
 
 
@@ -113,10 +121,10 @@ router.post('/users/recover', async (req, res) => {
         // sendForgotPassword(user.email,user.username,resetPasswordLink)
 
 
-        res.send(resetPasswordLink)
+        res.send({ url: resetPasswordLink })
 
     } catch (error) {
-        res.status(500).send(error)
+        res.status(500).send({ error })
     }
 })
 
@@ -135,10 +143,10 @@ router.get('/users/reset/:resetToken', async (req, res) => {
         if (!user) {
             return res.status(401).render('unvalid')
         }
-        res.render('reset',{
-            name:user.username,
-            email:user.email,
-            token:req.params.resetToken
+        res.render('reset', {
+            name: user.username,
+            email: user.email,
+            token: req.params.resetToken
         });
 
     } catch (error) {
@@ -165,7 +173,7 @@ router.post('/users/reset/:resetToken', async (req, res) => {
             return res.status(401).render('unvalid')
         }
 
-        const newpassword = req.headers['newpassword'] 
+        const newpassword = req.headers['newpassword']
 
 
         user.password = newpassword

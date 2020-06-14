@@ -35,23 +35,23 @@ const userSchema = new mongoose.Schema({
         minlength: 6,
     },
 
-    server:{
-        type:String,
-        default:'serverONE'
-    
+    server: {
+        type: String,
+        default: 'serverONE'
+
     },
 
-    banned:{
-        type:Boolean,
+    banned: {
+        type: Boolean,
         default: false
     },
 
-    bannedDate:{
+    bannedDate: {
         type: Date
     },
 
-    bannedReason:{
-        type:String
+    bannedReason: {
+        type: String
     },
 
     token: {
@@ -80,17 +80,17 @@ const userSchema = new mongoose.Schema({
 )
 userSchema.plugin(uniqueValidator);
 
-userSchema.methods.generatePasswordReset = async function() {
-   const user = this
+userSchema.methods.generatePasswordReset = async function () {
+    const user = this
 
-   const resetPasswordToken = crypto.randomBytes(20).toString('hex');
-   const resetPasswordExpires = Date.now() + parseInt(process.env.RESET_PASSWORD_EXPIRE_TIME);
-    
-   
-   user.resetPasswordToken = resetPasswordToken
-   user.resetPasswordExpires = resetPasswordExpires
+    const resetPasswordToken = crypto.randomBytes(20).toString('hex');
+    const resetPasswordExpires = Date.now() + parseInt(process.env.RESET_PASSWORD_EXPIRE_TIME);
 
-   await user.save()
+
+    user.resetPasswordToken = resetPasswordToken
+    user.resetPasswordExpires = resetPasswordExpires
+
+    await user.save()
 
     return resetPasswordToken
 };
@@ -99,7 +99,7 @@ userSchema.methods.generatePasswordReset = async function() {
 
 userSchema.methods.generateAuthToken = async function () {
     const user = this
-    const token = jwt.sign({ _id: user._id.toString() },process.env.JWT_SECRET)
+    const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET)
 
     user.token = token
     await user.save()
@@ -108,10 +108,10 @@ userSchema.methods.generateAuthToken = async function () {
 }
 
 
-userSchema.statics.findByCredentials = async (email, password)=>{
+userSchema.statics.findByCredentials = async (email, password) => {
     const user = await User.findOne({ email: email })
 
-    if(!user){
+    if (!user) {
         throw new Error('Unable to login')
     }
 
@@ -120,15 +120,15 @@ userSchema.statics.findByCredentials = async (email, password)=>{
     if (!isMatch) {
         throw new Error('Unable to login')
     }
-    
+
     return user
 }
 
 // Hash the plain text password before saving
-userSchema.pre('save', async function(next){
+userSchema.pre('save', async function (next) {
     const user = this
 
-    if(user.isModified('password')){
+    if (user.isModified('password')) {
         user.password = await bcrypt.hash(user.password, 8)
     }
 
@@ -136,10 +136,10 @@ userSchema.pre('save', async function(next){
 })
 
 // // Deteting user
-userSchema.pre('remove', async function(next){
+userSchema.pre('remove', async function (next) {
     // const user = this
 
-     
+
 
     next()
 })
