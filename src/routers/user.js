@@ -1,5 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const jwt = require('jsonwebtoken')
 const User = require('../models/user')
 const Profile = require('../models/profile')
 const Inventory = require('../models/inventory')
@@ -92,11 +93,21 @@ router.post('/users/logout', auth, async (req, res) => {
 
 })
 
-router.get('/users/check', auth, async (req, res) => {
+// Check user token
+router.get('/users/check', async (req, res) => {
     try {
-        res.send({ 'success': true })
+
+        const token = req.header('Authorization').replace('Bearer ', '')
+        const decoded = jwt.verify(token, process.env.JWT_SECRET)
+
+        const user = await User.findOne({ _id: decoded._id, 'token': token })
+        if (!user) {
+            throw new Error()
+        }
+
+        res.send({ success: true })
     } catch (error) {
-        res.status(500).send({ 'success': false })
+        res.status(401).send({ success: false, error: 'Please authenticate.' })
     }
 
 })
@@ -198,9 +209,6 @@ router.get('/users/successful', async (req, res) => {
         res.status(500).send(error)
     }
 })
-
-//rendererror
-
 
 
 
