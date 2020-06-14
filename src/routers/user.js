@@ -94,9 +94,9 @@ router.post('/users/logout', auth, async (req, res) => {
 
 router.get('/users/check', auth, async (req, res) => {
     try {
-        res.send()
+        res.send({ 'success': true })
     } catch (error) {
-        res.status(500).send()
+        res.status(500).send({ 'success': false })
     }
 
 })
