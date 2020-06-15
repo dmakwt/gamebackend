@@ -1,7 +1,9 @@
 const express = require('express')
 require('./db/mongoose')
+require('./agenda/agenda')
 const path = require('path')
 const userRouter = require('./routers/user')
+const attackRouter = require('./routers/attack')
 
 const app = express()
 
@@ -20,6 +22,7 @@ app.set('view engine', 'html');
 
 
 app.use(userRouter)
+app.use(attackRouter)
 
 app.use(express.static(publicDirPath))
 
