@@ -18,16 +18,12 @@ module.exports = (agenda) => {
             console.log('Energy full 100+')
             return
         }
-        myProfile.energy = oldEnergy + 10
+        myProfile.energy = oldEnergy + 1
         await myProfile.save()
 
-        job.repeatEvery('3 seconds')
+        job.repeatEvery('1 second')
         await job.save()
 
         console.log(`Enrgy 10+ :  The energy now: ${myProfile.energy}`)
     });
 }
-
-
-
-

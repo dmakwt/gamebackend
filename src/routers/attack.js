@@ -19,7 +19,7 @@ router.post('/attack/monster', auth, async (req, res) => {
         if (!myProfile) {
             return res.status(404).send()
         }
-        myProfile.energy = myOldEnergy - 50
+        myProfile.energy = myOldEnergy - 70
         await myProfile.save()
 
 

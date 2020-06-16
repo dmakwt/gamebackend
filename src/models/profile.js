@@ -13,6 +13,11 @@ const profileSchema = new mongoose.Schema({
         ref: 'User'
     },
 
+    usernameID: {
+        type: String,
+        required: true,
+    },
+
     username: {
         type: String,
         required: true,

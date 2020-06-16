@@ -11,12 +11,16 @@ const { sendForgotPassword } = require('../emails/send_email')
 const router = new express.Router()
 
 router.post('/users/signup', async (req, res) => {
-    const user = new User(req.body)
+    const user = new User({
+        ...req.body,
+        usernameID:req.body.username
+    })
 
     const profile = new Profile(
         {
             _id: user._id,
             username: user.username,
+            usernameID:user.usernameID,
             avatarURL: '',
             bio: '',
             hp: 100,
