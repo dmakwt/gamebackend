@@ -1,29 +1,25 @@
 const Profile = require('../models/profile')
 
+const clamp= (val, min, max) =>{
+    return val > max ? max : val < min ? min : val;
+}
+
 module.exports = (agenda) => {
-    agenda.define('increase energy', { priority: 'high', concurrency: 10 }, async (job) => {
-        console.log('Fire increase energy')
+    agenda.define('increase energy', { priority: 'high', concurrency: 10}, async job => {
 
-        const username = job.attrs.data;
-        const myProfile = await Profile.findOne({ username: username })
-    
-
-        console.log('from username', myProfile.energy)
+        const usernameID = job.attrs.data.userId;
+        const myProfile = await Profile.findOne({ usernameID: usernameID })
         const oldEnergy = myProfile.energy
 
 
-        if (myProfile.energy === 100) {
+        if (myProfile.energy >= 100) {
             await job.remove()
-
-            console.log('Energy full 100+')
             return
         }
-        myProfile.energy = oldEnergy + 1
+
+        myProfile.energy = oldEnergy + 10
+        myProfile.energy = clamp(myProfile.energy,0,100)
         await myProfile.save()
 
-        job.repeatEvery('1 second')
-        await job.save()
-
-        console.log(`Enrgy 10+ :  The energy now: ${myProfile.energy}`)
     });
 }

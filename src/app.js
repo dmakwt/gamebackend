@@ -2,6 +2,7 @@ const path = require('path')
 const http = require('http')
 const express = require('express')
 const socketio = require('socket.io')
+const { connectionIo } = require('./socketio/init_scoketio')
 
 require('./db/mongoose')
 require('./agenda/agenda')
@@ -13,7 +14,7 @@ const app = express()
 const server = http.createServer(app)
 const io = socketio(server)
 
-const { connectionIo } = require('./socketio/init_scoketio')
+
 
 
 const publicDirPath = path.join(__dirname, '../public')
@@ -50,4 +51,4 @@ app.get('*', (req, res) => {
     res.render('404')
 })
 
-module.exports = app
+module.exports = server

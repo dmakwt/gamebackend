@@ -11,7 +11,6 @@ const router = new express.Router()
 
 router.post('/attack/monster', auth, async (req, res) => {
     try {
-        console.log('Fire attack monster')
         const myProfile = await Profile.findOne({ username: req.user.username })
         const myOldEnergy = myProfile.energy
 
@@ -19,15 +18,20 @@ router.post('/attack/monster', auth, async (req, res) => {
         if (!myProfile) {
             return res.status(404).send()
         }
-        myProfile.energy = myOldEnergy - 70
+        myProfile.energy = myOldEnergy - 80
         await myProfile.save()
 
+        await agenda.create('increase energy', { userId: myProfile.usernameID })
+            .repeatEvery('1 second')
+            .unique({ 'data.userId': myProfile.usernameID })
+            .save();
 
-        await agenda.now('increase energy', myProfile.username)
+
+
         res.send()
 
     } catch (error) {
-        res.status(500).send()
+        res.status(500).send(error)
     }
 
 

@@ -6,7 +6,7 @@ const connectionIo = (io) => {
     io.on('connection', (socket) => {
 
         socket.on('join', (data) => {
-            socket.join(data.username)
+            socket.join(data.usernameID)
         });
 
 

@@ -1,7 +1,7 @@
 var Agenda = require('agenda')
 const mongoose = require('mongoose')
 
-var agenda = new Agenda({ mongo: mongoose.connection});
+var agenda = new Agenda({ mongo: mongoose.connection , db:{collection: 'scheduledTasks'}});
 
 let jobTypes = ["increase_energy"];
 
@@ -14,7 +14,7 @@ jobTypes.forEach(type => {
 
 if (jobTypes.length) {
     // if there are jobs in the jobsTypes array set up 
-    agenda.on('ready', async () => await agenda.start());
+    agenda.start()
 }
 
 // let graceful = () => {
