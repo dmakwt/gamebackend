@@ -1,5 +1,6 @@
-var Agenda = require('agenda');
+var Agenda = require('agenda')
 const mongoose = require('mongoose')
+
 var agenda = new Agenda({ mongo: mongoose.connection});
 
 let jobTypes = ["increase_energy"];
