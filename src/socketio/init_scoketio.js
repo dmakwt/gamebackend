@@ -1,27 +1,22 @@
 
+const { io } = require('../config')
 
 
-const connectionIo = (io) => {
 
-    io.on('connection', (socket) => {
-        console.log(`User one connection: ${socket.id}`)
-        socket.on('join', (data) => {
-            console.log(data)
-            // console.log(`Join: ${data.usernameID}`)
-            // socket.join(data.usernameID)
-        });
 
-        io.emit('test')
+io.on('connection', (socket) => {
 
-        socket.on('disconnect', () => {
-            console.log(`User one disconnected: ${socket.id}`)
-        })
-        
+    socket.on('join', (usernameID) => {
+        socket.join(`${usernameID}`)
+        console.log(`${usernameID}: join`)
+    });
+
+
+    socket.on('disconnect', () => {
+        console.log(`User one disconnected: ${socket.id}`)
     })
-    
-}
+
+})
 
 
-module.exports = {
-    connectionIo,
-}
+

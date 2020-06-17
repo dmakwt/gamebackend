@@ -1,8 +1,7 @@
 const path = require('path')
-const http = require('http')
-const express = require('express')
-const socketio = require('socket.io')
-const { connectionIo } = require('./socketio/init_scoketio')
+const { app,io ,express} = require('./config')
+
+
 
 require('./db/mongoose')
 require('./agenda/agenda')
@@ -10,20 +9,13 @@ require('./agenda/agenda')
 const userRouter = require('./routers/user')
 const attackRouter = require('./routers/attack')
 
-const app = express()
-const server = http.createServer(app)
-const io = socketio(server)
-
-
-
 
 const publicDirPath = path.join(__dirname, '../public')
 const viewPath = path.join(__dirname, '/views')
 
-// Socket io connection
-connectionIo(io)
-
-
+// // Socket io connection
+// connectionIo(io)
+require('./socketio/init_scoketio')
 
 
 
@@ -46,10 +38,12 @@ app.use(express.static(publicDirPath))
 
 
 
+console.log('app.js file')
+io.emit('test', 'teeeeest')
 
 
 app.get('*', (req, res) => {
     res.render('404')
 })
 
-module.exports = server
+

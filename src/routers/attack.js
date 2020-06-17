@@ -30,11 +30,32 @@ router.post('/attack/monster', auth, async (req, res) => {
         res.status(201).send()
 
     } catch (error) {
-        res.status(500).send({error})
+        res.status(500).send({ error })
     }
 
 
 
+})
+
+
+router.post('/attack/person', async (req, res) => {
+    try {
+        const myProfile = await Profile.findOne({ username: req.body.usernameID })
+        const myOldEnergy = myProfile.energy
+        
+
+        if (!myProfile) {
+            return res.status(404).send()
+        }
+        myProfile.energy = myOldEnergy - 10
+        await myProfile.save()
+
+
+        res.status(201).send()
+
+    } catch (error) {
+        res.status(500).send({ error })
+    }
 })
 
 

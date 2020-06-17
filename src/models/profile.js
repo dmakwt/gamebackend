@@ -2,8 +2,7 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const agenda = require('../agenda/agenda')
-
+const {io} = require('../config')
 
 
 const profileSchema = new mongoose.Schema({
@@ -195,37 +194,22 @@ const profileSchema = new mongoose.Schema({
 
 )
 
-const runAgenda = async function(profile){
-
-await agenda.create('increase energy', { userId: profile.usernameID, firstTime: true })
-            .repeatEvery('10 seconds')
-            .unique({ 'data.userId': profile.usernameID })
-            .save();
-}
 
 
-profileSchema.pre('save', async function (next) {
+
+profileSchema.post('save', async function () {
     const profile = this
-    // console.log(JSON.stringify(profile) )
 
-    if (profile.isModified('energy')) {
-        console.log('run')
-        await runAgenda(profile)
+    io.to(`${profile.usernameID}`).emit('profileChanged', JSON.stringify(profile))
 
-    }
 
-    next()
 })
 
 
 
 
 
-
-
 const Profile = mongoose.model('Profile', profileSchema)
-
-
 
 module.exports = Profile
 
