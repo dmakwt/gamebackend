@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const agenda = require('../agenda/agenda')
 
 
 
@@ -65,7 +66,7 @@ const profileSchema = new mongoose.Schema({
         default: 0
     },
 
-    skillPoints:{
+    skillPoints: {
         type: Number,
         default: 0,
         validate: {
@@ -194,11 +195,27 @@ const profileSchema = new mongoose.Schema({
 
 )
 
+const runAgenda = async function(profile){
+
+await agenda.create('increase energy', { userId: profile.usernameID, firstTime: true })
+            .repeatEvery('10 seconds')
+            .unique({ 'data.userId': profile.usernameID })
+            .save();
+}
 
 
+profileSchema.pre('save', async function (next) {
+    const profile = this
+    // console.log(JSON.stringify(profile) )
 
+    if (profile.isModified('energy')) {
+        console.log('run')
+        await runAgenda(profile)
 
+    }
 
+    next()
+})
 
 
 

@@ -18,20 +18,19 @@ router.post('/attack/monster', auth, async (req, res) => {
         if (!myProfile) {
             return res.status(404).send()
         }
-        myProfile.energy = myOldEnergy - 80
+        myProfile.energy = myOldEnergy - 10
         await myProfile.save()
 
-        await agenda.create('increase energy', { userId: myProfile.usernameID })
-            .repeatEvery('1 second')
-            .unique({ 'data.userId': myProfile.usernameID })
-            .save();
-
+        // await agenda.create('increase energy', { userId: myProfile.usernameID , firstTime:true})
+        //     .repeatEvery('10 seconds')
+        //     .unique({ 'data.userId': myProfile.usernameID })
+        //     .save();
 
 
         res.send()
 
     } catch (error) {
-        res.status(500).send(error)
+        res.status(500).send({error})
     }
 
 
