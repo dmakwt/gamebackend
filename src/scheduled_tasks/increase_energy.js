@@ -17,9 +17,11 @@ module.exports = (agenda) => {
             return
         }
 
-        myProfile.energy = oldEnergy + 10
+        myProfile.energy = oldEnergy + 1
         myProfile.energy = clamp(myProfile.energy,0,100)
         await myProfile.save()
+
+        
 
     });
 }

@@ -28,7 +28,7 @@ router.post('/attack/monster', auth, async (req, res) => {
 
 
 
-        res.send()
+        res.status(201).send()
 
     } catch (error) {
         res.status(500).send(error)

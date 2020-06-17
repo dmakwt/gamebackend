@@ -13,14 +13,14 @@ const router = new express.Router()
 router.post('/users/signup', async (req, res) => {
     const user = new User({
         ...req.body,
-        usernameID:req.body.username
+        usernameID: req.body.username
     })
 
     const profile = new Profile(
         {
             _id: user._id,
             username: user.username,
-            usernameID:user.usernameID,
+            usernameID: user.usernameID,
             avatarURL: '',
             bio: '',
             hp: 100,
@@ -50,7 +50,7 @@ router.post('/users/signup', async (req, res) => {
 
 
 
-        res.status(201).send({ token })
+        res.status(201).send({ usernameID: user.usernameID, token })
 
     } catch (error) {
 
@@ -75,7 +75,7 @@ router.post('/users/login', async (req, res) => {
         user.token = token
         await user.save()
 
-        res.send({ token })
+        res.send({ usernameID: user.usernameID, token })
 
     } catch (error) {
         res.status(401).send(error)

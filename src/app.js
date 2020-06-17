@@ -26,6 +26,7 @@ connectionIo(io)
 
 
 
+
 app.set('views', viewPath);
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
