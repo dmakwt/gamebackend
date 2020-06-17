@@ -1,4 +1,4 @@
-var Agenda = require('agenda')
+const Agenda = require('agenda')
 const mongoose = require('mongoose')
 
 var agenda = new Agenda({
@@ -14,7 +14,7 @@ let jobTypes = ["increase_energy"];
 // each job so that it has access to its API.
 jobTypes.forEach(type => {
     // the type name should match the file name in the jobs_list folder
-    require('../scheduled_tasks/' + type)(agenda)
+    require('../scheduled_jobs/' + type)(agenda)
 })
 
 if (jobTypes.length) {

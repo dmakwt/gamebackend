@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 const agenda = require('../agenda/agenda')
 
 
-
+process.em
 const profileSchema = new mongoose.Schema({
 
     _id: {
@@ -195,27 +195,8 @@ const profileSchema = new mongoose.Schema({
 
 )
 
-const runAgenda = async function(profile){
-
-await agenda.create('increase energy', { userId: profile.usernameID, firstTime: true })
-            .repeatEvery('10 seconds')
-            .unique({ 'data.userId': profile.usernameID })
-            .save();
-}
 
 
-profileSchema.pre('save', async function (next) {
-    const profile = this
-    // console.log(JSON.stringify(profile) )
-
-    if (profile.isModified('energy')) {
-        console.log('run')
-        await runAgenda(profile)
-
-    }
-
-    next()
-})
 
 
 
