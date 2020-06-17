@@ -1,7 +1,12 @@
 var Agenda = require('agenda')
 const mongoose = require('mongoose')
 
-var agenda = new Agenda({ mongo: mongoose.connection , db:{collection: 'scheduledTasks'}});
+var agenda = new Agenda({
+     mongo: mongoose.connection ,
+      db:{collection: 'scheduledTasks'},
+      processEvery:'5 seconds'
+    
+    });
 
 let jobTypes = ["increase_energy"];
 
