@@ -2,7 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const auth = require('../middlewares/auth')
 const Profile = require('../models/profile')
-const agenda = require('../agenda/agenda')
+const {increaseEnergy} = require('../scheduled_tasks/run_increase_energy')
 
 
 
@@ -18,14 +18,14 @@ router.post('/attack/monster', auth, async (req, res) => {
         if (!myProfile) {
             return res.status(404).send()
         }
-        myProfile.energy = myOldEnergy - 10
+        myProfile.energy = myOldEnergy - 30
         await myProfile.save()
 
-        // await agenda.create('increase energy', { userId: myProfile.usernameID , firstTime:true})
-        //     .repeatEvery('10 seconds')
-        //     .unique({ 'data.userId': myProfile.usernameID })
-        //     .save();
+       
+        await increaseEnergy(myProfile,'5 seconds')
 
+
+         
 
         res.status(201).send()
 

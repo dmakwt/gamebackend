@@ -10,24 +10,18 @@ module.exports = (agenda) => {
         const usernameID = job.attrs.data.userId;
         const myProfile = await Profile.findOne({ usernameID: usernameID })
         const oldEnergy = myProfile.energy
-        /////////////////////////////////fix
         
-        if (job.attrs.data.firstTime === false) {
-            myProfile.energy = oldEnergy + 10
-            myProfile.energy = clamp(myProfile.energy, 0, 100)
-            await myProfile.save()
-
-        }
-
         if (oldEnergy >= 100) {
             console.log('Done')
             await job.remove()
             return
         }
 
+        myProfile.energy = oldEnergy + 10
+        myProfile.energy = clamp(myProfile.energy, 0, 100)
+        await myProfile.save()
 
-
-        job.attrs.data.firstTime = false
+ 
 
     });
 }
