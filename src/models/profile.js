@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const {io} = require('../config')
+const { io } = require('../config')
 
 process.em
 const profileSchema = new mongoose.Schema({
@@ -11,6 +11,12 @@ const profileSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'User'
+    },
+
+    position: {
+        type: String,
+        required: true,
+        default: 'player'
     },
 
     usernameID: {
@@ -63,6 +69,11 @@ const profileSchema = new mongoose.Schema({
         type: Number,
         required: true,
         default: 0
+    },
+
+    showLeaderboard: {
+        type: Boolean,
+        default: true
     },
 
     skillPoints: {
@@ -197,11 +208,21 @@ const profileSchema = new mongoose.Schema({
 
 
 
-profileSchema.post('save', async function () {
+profileSchema.pre('save', async function () {
     const profile = this
+    
+    const data = {
+        energy: profile.energy,
+        hp: profile.hp,
+        money: profile.money,
+        xp: profile.xp,
+        avatarURL: profile.avatarURL
+    }
 
-    io.to(`${profile.usernameID}`).emit('profileChanged', JSON.stringify(profile))
 
+    if (profile.isModified('energy') || profile.isModified('hp') || profile.isModified('money') || profile.isModified('xp') || profile.isModified('avatarURL')) {
+        io.to(`${profile.usernameID}`).emit('statusAppbarChanged', JSON.stringify(data))
+    }
 
 })
 
