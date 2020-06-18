@@ -6,6 +6,7 @@ const { app,io ,express} = require('./config')
 require('./db/mongoose')
 require('./agenda/agenda')
 
+//Routers
 const userRouter = require('./routers/user')
 const attackRouter = require('./routers/attack')
 
@@ -20,8 +21,7 @@ require('./socketio/init_scoketio')
 
 
 app.set('views', viewPath);
-app.engine('html', require('ejs').renderFile);
-app.set('view engine', 'html');
+app.set('view engine', 'ejs');
 
 app.use(express.json())
 
@@ -37,13 +37,12 @@ app.use(attackRouter)
 app.use(express.static(publicDirPath))
 
 
-
-console.log('app.js file')
-io.emit('test', 'teeeeest')
-
-
+app.get('/', (req, res) => {
+    res.render('index')
+})
 app.get('*', (req, res) => {
     res.render('404')
 })
+
 
 

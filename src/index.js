@@ -8,7 +8,3 @@ server.listen(port,() => {
 })
 
 
-
-
-
-console.log('index.js file')

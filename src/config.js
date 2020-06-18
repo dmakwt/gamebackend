@@ -6,7 +6,7 @@ const app = express()
 const server = http.createServer(app)
 const io = socketio(server)
 
-console.log('config.js file')
+
 
 module.exports = {
     app,
