@@ -9,9 +9,9 @@ const {increaseEnergy} = require('../scheduled_tasks/run_increase_energy')
 const router = new express.Router()
 
 
-router.post('/attack/monster', auth, async (req, res) => {
+router.post('/attack/monster', async (req, res) => {
     try {
-        const myProfile = await Profile.findOne({ username: req.user.username })
+        const myProfile = await Profile.findOne({ username: req.body.usernameID })
         const myOldEnergy = myProfile.energy
 
 
