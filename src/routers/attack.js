@@ -11,7 +11,7 @@ const router = new express.Router()
 
 router.post('/attack/monster', async (req, res) => {
     try {
-        const myProfile = await Profile.findOne({ username: req.body.usernameID })
+        const myProfile = await Profile.findOne({ usernameID: req.body.usernameID  })
         const myOldEnergy = myProfile.energy
 
 
@@ -40,7 +40,7 @@ router.post('/attack/monster', async (req, res) => {
 
 router.post('/attack/person', async (req, res) => {
     try {
-        const myProfile = await Profile.findOne({ username: req.body.usernameID })
+        const myProfile = await Profile.findOne({ usernameID: req.body.usernameID })
         const myOldEnergy = myProfile.energy
         
 
