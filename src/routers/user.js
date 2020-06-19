@@ -50,7 +50,7 @@ router.post('/users/signup', async (req, res) => {
 
 
 
-        res.status(201).send({ usernameID: user.usernameID, token })
+        res.status(201).send({ usernameID: user.usernameID, token, profile })
 
     } catch (error) {
 
@@ -64,9 +64,14 @@ router.post('/users/login', async (req, res) => {
 
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
+        const profile = await Profile.findById(user._id)
 
         if (user.banned === true) {
             return res.status(403).send({ error: 'Accound is banned' })
+        }
+
+        if (!profile) {
+            throw new Error('Unable to login')
         }
 
 
@@ -75,7 +80,8 @@ router.post('/users/login', async (req, res) => {
         user.token = token
         await user.save()
 
-        res.send({ usernameID: user.usernameID, token })
+
+        res.send({ usernameID: user.usernameID, token, profile })
 
     } catch (error) {
         res.status(401).send(error)
@@ -105,11 +111,14 @@ router.get('/users/check', async (req, res) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
 
         const user = await User.findOne({ _id: decoded._id, 'token': token })
-        if (!user) {
-            throw new Error()
+        const profile = await Profile.findById(user._id)
+
+        if (!user || !profile) {
+            throw new Error('Unable to login')
         }
 
-        res.send({ success: true })
+
+        res.send({ success: true, profile })
     } catch (error) {
         res.status(401).send({ success: false, error: 'Please authenticate.' })
     }

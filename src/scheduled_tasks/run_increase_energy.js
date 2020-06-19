@@ -3,7 +3,7 @@ const agenda = require('../agenda/agenda')
 
 
 
-const increaseEnergy = async (profile,repeateTime) => {
+const increaseEnergy = async (profile, repeateTime) => {
     await agenda.create('increase energy', { userId: profile.usernameID })
         .repeatEvery(repeateTime, { skipImmediate: true })
         .unique({ 'data.userId': profile.usernameID })
@@ -12,4 +12,4 @@ const increaseEnergy = async (profile,repeateTime) => {
 }
 
 
-module.exports ={increaseEnergy} 
+module.exports = { increaseEnergy } 

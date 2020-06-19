@@ -211,17 +211,9 @@ const profileSchema = new mongoose.Schema({
 profileSchema.pre('save', async function () {
     const profile = this
     
-    const data = {
-        energy: profile.energy,
-        hp: profile.hp,
-        money: profile.money,
-        xp: profile.xp,
-        avatarURL: profile.avatarURL
-    }
-
 
     if (profile.isModified('energy') || profile.isModified('hp') || profile.isModified('money') || profile.isModified('xp') || profile.isModified('avatarURL')) {
-        io.to(`${profile.usernameID}`).emit('statusAppbarChanged', JSON.stringify(data))
+        io.to(`${profile.usernameID}`).emit('statusAppbarChanged', JSON.stringify(profile))
     }
 
 })
