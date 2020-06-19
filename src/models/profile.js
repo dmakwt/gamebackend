@@ -221,7 +221,7 @@ profileSchema.pre('save', async function () {
     const profile = this
     
 
-    if (profile.isModified('energy') || profile.isModified('hp') || profile.isModified('money') || profile.isModified('xp') || profile.isModified('avatarURL')) {
+    if (profile.isModified('energy') || profile.isModified('hp') || profile.isModified('money') || profile.isModified('xp') || profile.isModified('avatarURL') || profile.isModified('gems')) {
         io.to(`${profile.usernameID}`).emit('statusAppbarChanged', JSON.stringify(profile))
     }
 
