@@ -47,6 +47,7 @@ router.post('/admin/signup', async (req, res) => {
             skillPoints: 6,
             honor: 0,
             money: 1000,
+            gems:20,
             wins: 0,
             loses: 0
         }

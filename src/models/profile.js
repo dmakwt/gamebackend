@@ -95,6 +95,15 @@ const profileSchema = new mongoose.Schema({
         required: true,
         default: 0
     },
+    gems:{
+        type: Number,
+        required: true,
+        default: 0,
+        validate: {
+            validator: Number.isInteger,
+            message: '{VALUE} is not an integer value'
+        }
+    },
 
     wins: {
         type: Number,
