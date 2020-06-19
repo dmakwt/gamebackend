@@ -9,6 +9,7 @@ require('./agenda/agenda')
 //Routers
 const userRouter = require('./routers/user')
 const attackRouter = require('./routers/attack')
+const adminRouter = require('./routers/admin')
 
 
 const publicDirPath = path.join(__dirname, '../public')
@@ -33,6 +34,7 @@ app.use((req, res, next) => {
 
 app.use(userRouter)
 app.use(attackRouter)
+app.use(adminRouter)
 
 app.use(express.static(publicDirPath))
 
