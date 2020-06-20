@@ -81,7 +81,7 @@ router.post('/admin/signup', async (req, res) => {
         res.status(400).send({ error: error.message })
     }
 });
-
+// Login Admin
 router.post('/admin/login', async (req, res) => {
 
     try {
@@ -108,7 +108,7 @@ router.post('/admin/login', async (req, res) => {
     }
 
 })
-
+// Logut Admin
 router.post('/admin/logout', auth, async (req, res) => {
 
     try {
@@ -122,4 +122,26 @@ router.post('/admin/logout', auth, async (req, res) => {
     }
 
 })
+
+
+
+//GetUsers
+// Get admin/getusers?limit=10&skip=0or10or20
+router.get('/admin/getusers',auth,async(req, res) => {
+    try {
+  
+        const users = await Profile.find()
+        .limit( parseInt(req.query.limit) )
+        .skip(parseInt(req.query.skip) )
+        
+        
+        res.send({users})
+
+
+    } catch (error) {
+        res.status(500).send()
+    }
+})
+
+
 module.exports = router
