@@ -1,6 +1,6 @@
 const path = require('path')
 const { app,io ,express} = require('./config')
-
+const cors = require('cors')
 
 
 require('./db/mongoose')
@@ -24,6 +24,11 @@ require('./socketio/init_scoketio')
 app.set('views', viewPath);
 app.set('view engine', 'ejs');
 
+/////////////////////////////
+var corsOptions = {
+    origin: 'http://localhost:4000',
+  }
+app.use(cors(corsOptions))
 app.use(express.json())
 
 // Pass socket io to the routers

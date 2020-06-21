@@ -129,7 +129,10 @@ router.post('/admin/logout', auth, async (req, res) => {
 // Get admin/getusers?limit=10&skip=0or10or20
 router.get('/admin/getusers',auth,async(req, res) => {
     try {
-  
+        if(!req.query.limit ||  !req.query.skip){
+            return res.status(500).send()
+        }
+
         const users = await Profile.find()
         .limit( parseInt(req.query.limit) )
         .skip(parseInt(req.query.skip) )
