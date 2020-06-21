@@ -22,7 +22,7 @@ router.post('/attack/monster', async (req, res) => {
         await myProfile.save()
 
        
-        await increaseEnergy(myProfile,'5 seconds')
+        await increaseEnergy(myProfile,process.env.INCREASE_ENERGY_TIMER)
 
 
          
