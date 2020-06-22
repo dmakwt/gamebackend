@@ -21,6 +21,7 @@ router.post('/users/signup', async (req, res) => {
             _id: user._id,
             username: user.username,
             usernameID: user.usernameID,
+            email:user.email,
             avatarURL: '',
             bio: '',
             hp: 100,

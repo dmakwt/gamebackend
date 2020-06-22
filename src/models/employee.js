@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
-
+const uniqueValidator = require('mongoose-unique-validator');
 
 
 const employeeSchema = new mongoose.Schema({
@@ -34,7 +34,7 @@ const employeeSchema = new mongoose.Schema({
 })
 
 
-
+employeeSchema.plugin(uniqueValidator);
 
 const Employee = mongoose.model('Employee', employeeSchema)
 

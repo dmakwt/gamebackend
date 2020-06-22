@@ -36,6 +36,7 @@ router.post('/admin/signup', async (req, res) => {
             _id: user._id,
             username: user.username,
             usernameID: user.usernameID,
+            email: user.email,
             position: req.body.position,
             showLeaderboard: false,
             avatarURL: '',

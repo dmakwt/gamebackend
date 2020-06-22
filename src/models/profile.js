@@ -3,7 +3,7 @@ const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { io } = require('../config')
-
+const uniqueValidator = require('mongoose-unique-validator');
 process.em
 const profileSchema = new mongoose.Schema({
 
@@ -11,6 +11,20 @@ const profileSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'User'
+    },
+
+    email: {
+        type: String,
+        ref: 'User',
+        required: true,
+        unique: true,
+        trim: true,
+        lowercase: true,
+        validate(value) {
+            if (!validator.isEmail(value)) {
+                throw Error('Email is invalid')
+            }
+        }
     },
 
     position: {
@@ -215,7 +229,7 @@ const profileSchema = new mongoose.Schema({
 )
 
 
-
+profileSchema.plugin(uniqueValidator);
 
 profileSchema.pre('save', async function () {
     const profile = this

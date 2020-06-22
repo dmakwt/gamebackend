@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-
+const uniqueValidator = require('mongoose-unique-validator');
 
 
 const messageSchema = new mongoose.Schema({
@@ -43,7 +43,7 @@ const messageSchema = new mongoose.Schema({
 
 
 
-
+messageSchema.plugin(uniqueValidator);
 
 
 

@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-
+const uniqueValidator = require('mongoose-unique-validator');
 
 
 const inventorySchema = new mongoose.Schema({
@@ -47,7 +47,7 @@ const inventorySchema = new mongoose.Schema({
 
 
 
-
+inventorySchema.plugin(uniqueValidator);
 
 const Inventory = mongoose.model('Inventory', inventorySchema)
 
