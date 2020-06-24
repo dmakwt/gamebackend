@@ -1,10 +1,12 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const User = require('../models/user')
+const Item = require('../models/item')
 const Employee = require('../models/employee')
 const Profile = require('../models/profile')
 const Inventory = require('../models/inventory')
 const auth = require('../middlewares/auth')
+const validator = require('validator')
 
 
 const router = new express.Router()
@@ -48,7 +50,7 @@ router.post('/admin/signup', async (req, res) => {
             skillPoints: 6,
             honor: 0,
             money: 1000,
-            gems:20,
+            gems: 20,
             wins: 0,
             loses: 0
         }
@@ -88,12 +90,12 @@ router.post('/admin/login', async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
         const employee = await Employee.findOne({
-            _id:user._id,
-            position:"admin"
+            _id: user._id,
+            position: "admin"
         })
 
 
-        if(!employee){
+        if (!employee) {
             return res.status(401).send({ error: "You are not Authorized!" })
         }
 
@@ -102,7 +104,7 @@ router.post('/admin/login', async (req, res) => {
         user.token = token
         await user.save()
 
-        res.send({ usernameID: user.usernameID, token:token })
+        res.send({ usernameID: user.usernameID, token: token })
 
     } catch (error) {
         res.status(401).send(error)
@@ -126,26 +128,70 @@ router.post('/admin/logout', auth, async (req, res) => {
 
 
 
-//GetUsers
-// Get admin/getusers?limit=10&skip=0or10or20
-router.get('/admin/getusers',auth,async(req, res) => {
+
+
+
+//GetOneUser
+router.get('/admin/getuser', auth, async (req, res) => {
     try {
-        if(!req.query.limit ||  !req.query.skip){
-            return res.status(500).send()
+        const userReq = req.user
+        const admin = await Employee.findById(userReq._id)
+        if (!admin) {
+            return res.status(401).send()
         }
 
-        const users = await Profile.find()
-        .limit( parseInt(req.query.limit) )
-        .skip(parseInt(req.query.skip) )
-        
-        
-        res.send({users})
+
+        if (validator.isEmail(req.query.data)) {
+            const user = await User.findOne({ email: req.query.data })
+
+            if (!user) {
+                return res.status(400).send({error:'No User Found'})
+            }
+
+            const userProfile = await Profile.findById(user._id)
+
+
+            return res.status(200).send({userProfile,banned:user.banned})
+        } else {
+            const user = await User.findOne({ usernameID: req.query.data })
+
+            if (!user) {
+                return res.status(400).send({error:'No User Found'})
+            }
+            const userProfile = await Profile.findById(user._id)
+            return res.status(200).send({userProfile,banned:user.banned})
+        }
+
+
+
+
+
 
 
     } catch (error) {
         res.status(500).send()
     }
 })
+
+
+
+
+//GetDataBase Properties
+router.get('/admin/getprop',auth,async(req,res)=>{
+    try {
+        const numUsers = await User.estimatedDocumentCount();
+        const numItems = await Item.estimatedDocumentCount();
+        res.status(200).send({Users:numUsers,Items:numItems})
+
+
+    } catch (error) {
+        res.status(500).send(error)
+    }
+})
+
+
+
+
 
 
 module.exports = router
