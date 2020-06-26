@@ -6,6 +6,7 @@ const Employee = require('../models/employee')
 const Profile = require('../models/profile')
 const Inventory = require('../models/inventory')
 const auth = require('../middlewares/auth')
+const authAdmin = require('../middlewares/authAdmin')
 const validator = require('validator')
 
 
@@ -132,13 +133,9 @@ router.post('/admin/logout', auth, async (req, res) => {
 
 
 //GetOneUser
-router.get('/admin/getuser', auth, async (req, res) => {
+router.get('/admin/getuser',auth,authAdmin, async (req, res) => {
     try {
-        const userReq = req.user
-        const admin = await Employee.findById(userReq._id)
-        if (!admin) {
-            return res.status(401).send()
-        }
+        
 
 
         if (validator.isEmail(req.query.data)) {
@@ -175,9 +172,48 @@ router.get('/admin/getuser', auth, async (req, res) => {
 
 
 
+router.post('/admin/changedata',auth,authAdmin,async(req,res)=>{
+    try {
+        user = await User.findOne({usernameID:req.body.usernameID})
+        userProfile = await Profile.findById(user._id)
+        console.log(req.body)
+
+        
+
+        if(req.body.banned!==user.banned){
+            user.banned=req.body.banned
+        }
+        if(req.body.showLeaderboard!==userProfile.showLeaderboard){
+            userProfile.showLeaderboard=req.body.showLeaderboard
+        }
+        if(req.body.avatarURL!==userProfile.avatarURL){
+            userProfile.avatarURL=req.body.avatarURL
+        }
+        if(req.body.userBIO !==userProfile.bio){
+            userProfile.bio=req.body.userBIO
+        }
+
+
+
+        //////////////////////need complete
+
+        await user.save()
+        await userProfile.save()
+
+        res.status(200).send({message:'Changed'})
+    } catch (error) {
+        res.status(500).send(error)
+    }
+})
+
+
+
+
+
+
 
 //GetDataBase Properties
-router.get('/admin/getprop',auth,async(req,res)=>{
+router.get('/admin/getprop',auth,authAdmin,async(req,res)=>{
     try {
         const numUsers = await User.estimatedDocumentCount();
         const numItems = await Item.estimatedDocumentCount();
