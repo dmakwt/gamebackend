@@ -133,30 +133,28 @@ router.post('/admin/logout', auth, async (req, res) => {
 
 
 //GetOneUser
-router.get('/admin/getuser',auth,authAdmin, async (req, res) => {
+router.get('/admin/getuser', auth, authAdmin, async (req, res) => {
     try {
-        
+
 
 
         if (validator.isEmail(req.query.data)) {
             const user = await User.findOne({ email: req.query.data })
 
-            if (!user) {
-                return res.status(400).send({error:'No User Found'})
-            }
+            if (!user) {return res.status(400).send({ error: 'No User Found' })}
 
             const userProfile = await Profile.findById(user._id)
 
 
-            return res.status(200).send({userProfile,banned:user.banned})
+            return res.status(200).send({ userProfile, banned: user.banned })
         } else {
             const user = await User.findOne({ usernameID: req.query.data })
 
             if (!user) {
-                return res.status(400).send({error:'No User Found'})
+                return res.status(400).send({ error: 'No User Found' })
             }
             const userProfile = await Profile.findById(user._id)
-            return res.status(200).send({userProfile,banned:user.banned})
+            return res.status(200).send({ userProfile, banned: user.banned })
         }
 
 
@@ -171,36 +169,103 @@ router.get('/admin/getuser',auth,authAdmin, async (req, res) => {
 })
 
 
-
-router.post('/admin/changedata',auth,authAdmin,async(req,res)=>{
+//Change user data
+router.post('/admin/changedata', auth, authAdmin, async (req, res) => {
     try {
-        user = await User.findOne({usernameID:req.body.usernameID})
+        user = await User.findOne({ usernameID: req.body.usernameID })
         userProfile = await Profile.findById(user._id)
         console.log(req.body)
 
+
+        if (req.body.showLeaderboard !== userProfile.showLeaderboard) {
+            userProfile.showLeaderboard = req.body.showLeaderboard
+        }
+        if (req.body.avatarURL !== userProfile.avatarURL) {
+            userProfile.avatarURL = req.body.avatarURL
+        }
+        if (req.body.userBIO !== userProfile.bio) {
+            userProfile.bio = req.body.userBIO
+        }
         
 
-        if(req.body.banned!==user.banned){
-            user.banned=req.body.banned
-        }
-        if(req.body.showLeaderboard!==userProfile.showLeaderboard){
-            userProfile.showLeaderboard=req.body.showLeaderboard
-        }
-        if(req.body.avatarURL!==userProfile.avatarURL){
-            userProfile.avatarURL=req.body.avatarURL
-        }
-        if(req.body.userBIO !==userProfile.bio){
-            userProfile.bio=req.body.userBIO
-        }
 
-
-
-        //////////////////////need complete
+        /////CON
+        // req.body.userName
+        // req.body.usernameID
+        // req.body.email
+        // req.body.position
+        // req.body.money
+        // req.body.gems
+        // req.body.level
+        // req.body.skillPoints
+        // req.body.honor
+        // req.body.wins
+        // req.body.loses
+        // req.body.strength
+        // req.body.defence
+        // req.body.agility
+        // req.body.intelligence
+        // req.body.constitution
+        // req.body.luck
 
         await user.save()
         await userProfile.save()
 
-        res.status(200).send({message:'Changed'})
+        res.status(200).send({ message: 'Changed' })
+    } catch (error) {
+        res.status(500).send(error)
+    }
+})
+
+
+//Get user Ban info
+router.get('/admin/userbaninfo', auth, authAdmin, async (req, res) => {
+    try {
+        user = await User.findOne({ usernameID: req.query.user })
+
+        if (!user) {return res.status(400).send({ error: 'No User Found' })}
+
+        const banInfo = {
+            usernameID : user.usernameID,
+            banned: user.banned,
+            bannedEndDate: Date.parse(user.bannedEndDate) || '',
+            bannedReason: user.bannedReason || ''
+        }
+
+
+
+
+        res.status(200).send(banInfo)
+    } catch (error) {
+        res.status(500).send(error)
+    }
+})
+
+
+//Ban User
+router.post('/admin/userban', auth, authAdmin, async (req, res) => {
+    try {
+        user = await User.findOne({ usernameID: req.body.usernameID })
+
+        if (!user) {return res.status(400).send({ error: 'No User Found' })}
+
+        
+
+            user.banned = req.body.banned
+            user.bannedEndDate = req.body.bannedEndDate
+            user.bannedReason =req.body.bannedReason
+        
+            await user.save()
+
+            const banInfo = {
+                usernameID : user.usernameID,
+                banned: user.banned,
+                bannedEndDate: user.bannedEndDate ,
+                bannedReason: user.bannedReason 
+            }
+
+
+        res.status(200).send(banInfo)
     } catch (error) {
         res.status(500).send(error)
     }
@@ -210,14 +275,12 @@ router.post('/admin/changedata',auth,authAdmin,async(req,res)=>{
 
 
 
-
-
 //GetDataBase Properties
-router.get('/admin/getprop',auth,authAdmin,async(req,res)=>{
+router.get('/admin/getprop', auth, authAdmin, async (req, res) => {
     try {
         const numUsers = await User.estimatedDocumentCount();
         const numItems = await Item.estimatedDocumentCount();
-        res.status(200).send({Users:numUsers,Items:numItems})
+        res.status(200).send({ Users: numUsers, Items: numItems })
 
 
     } catch (error) {

@@ -57,7 +57,7 @@ const userSchema = new mongoose.Schema({
         default: false
     },
 
-    bannedDate: {
+    bannedEndDate: {
         type: Date
     },
 
