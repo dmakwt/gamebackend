@@ -141,7 +141,7 @@ router.get('/admin/getuser', auth, authAdmin, async (req, res) => {
         if (validator.isEmail(req.query.data)) {
             const user = await User.findOne({ email: req.query.data })
 
-            if (!user) {return res.status(400).send({ error: 'No User Found' })}
+            if (!user) { return res.status(400).send({ error: 'No User Found' }) }
 
             const userProfile = await Profile.findById(user._id)
 
@@ -186,27 +186,59 @@ router.post('/admin/changedata', auth, authAdmin, async (req, res) => {
         if (req.body.userBIO !== userProfile.bio) {
             userProfile.bio = req.body.userBIO
         }
-        
+        if (req.body.userName !== userProfile.userName) {
+            userProfile.userName = req.body.userName
+        }
+        if (req.body.usernameID !== userProfile.usernameID) {
+            userProfile.usernameID = req.body.usernameID
+        }
+        if (req.body.email !== userProfile.email) {
+            userProfile.email = req.body.email
+        }
+        if (req.body.position !== userProfile.position) {
+            userProfile.position = req.body.position
+        }
+        if (req.body.money !== userProfile.money) {
+            userProfile.money = req.body.money
+        }
+        if (req.body.gems !== userProfile.gems) {
+            userProfile.gems = req.body.gems
+        }
+        if (req.body.level !== userProfile.level) {
+            userProfile.level = req.body.level
+        }
+        if (req.body.skillPoints !== userProfile.skillPoints) {
+            userProfile.skillPoints = req.body.skillPoints
+        }
+        if (req.body.honor !== userProfile.honor) {
+            userProfile.honor = req.body.honor
+        }
+        if (req.body.wins !== userProfile.wins) {
+            userProfile.wins = req.body.wins
+        }
+        if (req.body.loses !== userProfile.loses) {
+            userProfile.loses = req.body.loses
+        }
+        if (req.body.strength !== userProfile.strength) {
+            userProfile.strength = req.body.strength
+        }
+        if (req.body.defence !== userProfile.defence) {
+            userProfile.defence = req.body.defence
+        }
+        if (req.body.agility !== userProfile.agility) {
+            userProfile.agility = req.body.agility
+        }
+        if (req.body.intelligence !== userProfile.intelligence) {
+            userProfile.intelligence = req.body.intelligence
+        }
+        if (req.body.constitution !== userProfile.constitution) {
+            userProfile.constitution = req.body.constitution
+        }
+        if (req.body.luck !== userProfile.luck) {
+            userProfile.luck = req.body.luck
+        }
 
 
-        /////CON
-        // req.body.userName
-        // req.body.usernameID
-        // req.body.email
-        // req.body.position
-        // req.body.money
-        // req.body.gems
-        // req.body.level
-        // req.body.skillPoints
-        // req.body.honor
-        // req.body.wins
-        // req.body.loses
-        // req.body.strength
-        // req.body.defence
-        // req.body.agility
-        // req.body.intelligence
-        // req.body.constitution
-        // req.body.luck
 
         await user.save()
         await userProfile.save()
@@ -223,10 +255,10 @@ router.get('/admin/userbaninfo', auth, authAdmin, async (req, res) => {
     try {
         user = await User.findOne({ usernameID: req.query.user })
 
-        if (!user) {return res.status(400).send({ error: 'No User Found' })}
+        if (!user) { return res.status(400).send({ error: 'No User Found' }) }
 
         const banInfo = {
-            usernameID : user.usernameID,
+            usernameID: user.usernameID,
             banned: user.banned,
             bannedEndDate: Date.parse(user.bannedEndDate) || '',
             bannedReason: user.bannedReason || ''
@@ -247,22 +279,22 @@ router.post('/admin/userban', auth, authAdmin, async (req, res) => {
     try {
         user = await User.findOne({ usernameID: req.body.usernameID })
 
-        if (!user) {return res.status(400).send({ error: 'No User Found' })}
+        if (!user) { return res.status(400).send({ error: 'No User Found' }) }
 
-        
 
-            user.banned = req.body.banned
-            user.bannedEndDate = req.body.bannedEndDate
-            user.bannedReason =req.body.bannedReason
-        
-            await user.save()
 
-            const banInfo = {
-                usernameID : user.usernameID,
-                banned: user.banned,
-                bannedEndDate: user.bannedEndDate ,
-                bannedReason: user.bannedReason 
-            }
+        user.banned = req.body.banned
+        user.bannedEndDate = req.body.bannedEndDate
+        user.bannedReason = req.body.bannedReason
+
+        await user.save()
+
+        const banInfo = {
+            usernameID: user.usernameID,
+            banned: user.banned,
+            bannedEndDate: user.bannedEndDate,
+            bannedReason: user.bannedReason
+        }
 
 
         res.status(200).send(banInfo)
@@ -270,8 +302,6 @@ router.post('/admin/userban', auth, authAdmin, async (req, res) => {
         res.status(500).send(error)
     }
 })
-
-
 
 
 
@@ -287,8 +317,6 @@ router.get('/admin/getprop', auth, authAdmin, async (req, res) => {
         res.status(500).send(error)
     }
 })
-
-
 
 
 

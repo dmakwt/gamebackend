@@ -214,12 +214,6 @@ const profileSchema = new mongoose.Schema({
         }
     }
 
-
-
-
-
-
-
 },
     {
         timestamps: true,
@@ -240,7 +234,6 @@ profileSchema.pre('save', async function () {
     }
 
 })
-
 
 
 
