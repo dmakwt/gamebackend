@@ -1,5 +1,6 @@
 
 const Employee = require('../models/employee')
+
 const authAdmin = async (req, res, next) => {
     try {
 
