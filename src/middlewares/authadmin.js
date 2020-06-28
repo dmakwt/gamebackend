@@ -6,7 +6,7 @@ const authAdmin = async (req, res, next) => {
         const userReq = req.user
         const admin = await Employee.findById(userReq._id)
         if (!admin) {
-            return res.status(401).send()
+             throw new Error()
         }
         next()
     } catch (error) {
