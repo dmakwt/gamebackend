@@ -9,6 +9,7 @@ require('./agenda/agenda')
 //Routers
 const userRouter = require('./routers/user')
 const attackRouter = require('./routers/attack')
+const itemRouter = require('./routers/item')
 const adminRouter = require('./routers/admin')
 
 
@@ -39,6 +40,7 @@ app.use((req, res, next) => {
 
 app.use(userRouter)
 app.use(attackRouter)
+app.use(itemRouter)
 app.use(adminRouter)
 
 app.use(express.static(publicDirPath))
