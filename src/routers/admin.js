@@ -133,13 +133,13 @@ router.post('/admin/logout', auth, async (req, res) => {
 
 
 //GetOneUser
-router.get('/admin/getuser', auth, authAdmin, async (req, res) => {
+router.get('/admin/getuser/:id', auth, authAdmin, async (req, res) => {
     try {
 
 
 
-        if (validator.isEmail(req.query.data)) {
-            const user = await User.findOne({ email: req.query.data })
+        if (validator.isEmail(req.params.id)) {
+            const user = await User.findOne({ email: req.params.id })
 
             if (!user) { return res.status(400).send({ error: 'No User Found' }) }
 
@@ -148,7 +148,7 @@ router.get('/admin/getuser', auth, authAdmin, async (req, res) => {
 
             return res.status(200).send({ userProfile, banned: user.banned })
         } else {
-            const user = await User.findOne({ usernameID: req.query.data })
+            const user = await User.findOne({ usernameID: req.params.id })
 
             if (!user) {
                 return res.status(400).send({ error: 'No User Found' })
@@ -170,84 +170,57 @@ router.get('/admin/getuser', auth, authAdmin, async (req, res) => {
 
 
 //Change user data
-router.post('/admin/changedata', auth, authAdmin, async (req, res) => {
+router.post('/admin/changedata/:usernameID', auth, authAdmin, async (req, res) => {
     try {
-        user = await User.findOne({ usernameID: req.body.usernameID })
-        userProfile = await Profile.findById(user._id)
-        console.log(req.body)
-
-
-        if (req.body.showLeaderboard !== userProfile.showLeaderboard) {
-            userProfile.showLeaderboard = req.body.showLeaderboard
+        const user = await User.findOne({ usernameID: req.params.usernameID })
+        const profile = await Profile.findById(user._id)
+        const newdata = req.body
+       console.log(newdata)
+        for (let key of Object.keys(profile._doc)) {
+            if (key === 'userSkills') { }
+            else if (key === 'usedItems') { }
+            else if (key === 'energy') { }
+            else if (key === 'xp') { }
+            else if (key === 'hp') { }
+            else if (key === 'position') { }
+            else {
+                
+                if (newdata.hasOwnProperty(key) ){
+                    
+                    
+                    profile[key] = newdata[key]
+                }
+        
+            }
+        
         }
-        if (req.body.avatarURL !== userProfile.avatarURL) {
-            userProfile.avatarURL = req.body.avatarURL
+        
+        // Loop throw the profile user skills
+        for (let key of Object.keys(profile._doc.userSkills)) {
+            if (newdata.hasOwnProperty(key) ){
+        
+                profile.userSkills[key] = newdata[key]
+            }
         }
-        if (req.body.userBIO !== userProfile.bio) {
-            userProfile.bio = req.body.userBIO
+        
+        // Loop throw the user doc
+        for (let key of Object.keys(user._doc)) {
+            if (newdata.hasOwnProperty(key) ){
+        
+                user[key] = newdata[key]
+            }
         }
-        if (req.body.userName !== userProfile.userName) {
-            userProfile.userName = req.body.userName
-        }
-        if (req.body.usernameID !== userProfile.usernameID) {
-            userProfile.usernameID = req.body.usernameID
-        }
-        if (req.body.email !== userProfile.email) {
-            userProfile.email = req.body.email
-        }
-        if (req.body.position !== userProfile.position) {
-            userProfile.position = req.body.position
-        }
-        if (req.body.money !== userProfile.money) {
-            userProfile.money = req.body.money
-        }
-        if (req.body.gems !== userProfile.gems) {
-            userProfile.gems = req.body.gems
-        }
-        if (req.body.level !== userProfile.level) {
-            userProfile.level = req.body.level
-        }
-        if (req.body.skillPoints !== userProfile.skillPoints) {
-            userProfile.skillPoints = req.body.skillPoints
-        }
-        if (req.body.honor !== userProfile.honor) {
-            userProfile.honor = req.body.honor
-        }
-        if (req.body.wins !== userProfile.wins) {
-            userProfile.wins = req.body.wins
-        }
-        if (req.body.loses !== userProfile.loses) {
-            userProfile.loses = req.body.loses
-        }
-        if (req.body.strength !== userProfile.strength) {
-            userProfile.strength = req.body.strength
-        }
-        if (req.body.defence !== userProfile.defence) {
-            userProfile.defence = req.body.defence
-        }
-        if (req.body.agility !== userProfile.agility) {
-            userProfile.agility = req.body.agility
-        }
-        if (req.body.intelligence !== userProfile.intelligence) {
-            userProfile.intelligence = req.body.intelligence
-        }
-        if (req.body.constitution !== userProfile.constitution) {
-            userProfile.constitution = req.body.constitution
-        }
-        if (req.body.luck !== userProfile.luck) {
-            userProfile.luck = req.body.luck
-        }
-
 
 
         await user.save()
-        await userProfile.save()
+        await profile.save()
 
-        res.status(200).send({ message: 'Changed' })
+        res.status(200).send({ usernameID: user.usernameID })
     } catch (error) {
         res.status(500).send(error)
     }
 })
+
 
 
 //Get user Ban info
