@@ -33,7 +33,7 @@ const itemSchema = new mongoose.Schema({
     colors:{
         type:Array,
         required:true,
-        default:[0,'#000000','#000000'] //[Opacity,Color1,Color2,...]
+        default:[1,'#000000','#000000'] //[Opacity,Color1,Color2,...]
     },
 
     itemSkills:{
@@ -41,49 +41,49 @@ const itemSchema = new mongoose.Schema({
             _id:false,
             type:Number,
             required:true,
-            default:10
+            default:0
         },
         defence:{
             _id:false,
             type:Number,
             required:true,
-            default:10
+            default:0
         },
         agility:{
             _id:false,
             type:Number,
             required:true,
-            default:10
+            default:0
         },
         constitution:{
             _id:false,
             type:Number,
             required:true,
-            default:10
+            default:0
         },
         intelligence:{
             _id:false,
             type:Number,
             required:true,
-            default:10
+            default:0
         },
         luck:{
             _id:false,
             type:Number,
             required:true,
-            default:10
+            default:0
         },
         health:{
             _id:false,
             type:Number,
             required:true,
-            default:10
+            default:0
         },
         energy:{
             _id:false,
             type:Number,
             required:true,
-            default:10
+            default:0
         }
     },
 
@@ -112,7 +112,7 @@ const itemSchema = new mongoose.Schema({
     gemsPrice:{
         type:Number,
         required:true,
-        default:0
+        default:10
     },
 
     sellPrice:{
@@ -132,11 +132,6 @@ const itemSchema = new mongoose.Schema({
         required:true,
         default:0
     }
-
-
-
-
-    
 },
     {
         timestamps: true,
