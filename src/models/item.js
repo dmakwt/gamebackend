@@ -24,10 +24,10 @@ const itemSchema = new mongoose.Schema({
         required:true,
     },
 
-    deceriptionEN:{
+    descriptionEN:{
         type:String
     },
-    deceriptionAR:{
+    descriptionAR:{
         type:String
     },
     colors:{
@@ -80,6 +80,12 @@ const itemSchema = new mongoose.Schema({
             default:0
         },
         energy:{
+            _id:false,
+            type:Number,
+            required:true,
+            default:0
+        },
+        xp:{
             _id:false,
             type:Number,
             required:true,
