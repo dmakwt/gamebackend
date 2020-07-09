@@ -44,18 +44,18 @@ router.patch('/item/editItem/:id', auth, authAdmin, async (req, res) => {
         const item = await Item.findByIdAndUpdate(req.params.id, req.body)
 
         if (!item) {
-            return res.status(404).send()
+            return res.status(404).send({error:'Item Not Found!'})
         }
 
         const newItem = await Item.findById(req.params.id)
 
         if (!newItem) {
-            return res.status(404).send()
+            return res.status(404).send({error:'Item Not Found!'})
         }
 
-        res.status(200).send(newItem)
+        res.status(200).send({newItem})
     } catch (error) {
-        res.status(401).send(error)
+        res.status(500).send(error)
     }
 })
 
@@ -83,7 +83,7 @@ router.get('/item/allItems', auth, authAdmin, async (req, res) => {
             return res.status(404).send()
         }
 
-        res.status(200).send(items)
+        res.status(200).send({data:items.reverse()})
     } catch (error) {
         res.status(401).send(error)
     }
