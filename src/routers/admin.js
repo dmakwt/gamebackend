@@ -6,7 +6,7 @@ const Employee = require('../models/employee')
 const Profile = require('../models/profile')
 const Inventory = require('../models/inventory')
 const auth = require('../middlewares/auth')
-const authAdmin = require('../middlewares/authAdmin')
+const authAdmin = require('../middlewares/authadmin')
 const validator = require('validator')
 
 
