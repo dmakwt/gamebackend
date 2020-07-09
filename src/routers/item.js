@@ -4,7 +4,7 @@ const validator = require('validator')
 const Profile = require('../models/profile')
 const Item = require('../models/item')
 const auth = require('../middlewares/auth')
-const authAdmin = require('../middlewares/authAdmin')
+const authAdmin = require('../middlewares/authadmin')
 
 const router = new express.Router()
 
