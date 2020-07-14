@@ -6,7 +6,7 @@ const Employee = require('../models/employee')
 const Profile = require('../models/profile')
 const Inventory = require('../models/inventory')
 const auth = require('../middlewares/auth')
-const authAdmin = require('../middlewares/authAdmin')
+const authAdmin = require('../middlewares/authadmin')
 const validator = require('validator')
 
 
@@ -146,7 +146,7 @@ router.get('/admin/getuser/:id', auth, authAdmin, async (req, res) => {
             const userProfile = await Profile.findById(user._id)
 
 
-            return res.status(200).send({ userProfile, banned: user.banned })
+            return res.status(200).send({ userProfile, banned: user.banned, userID:user._id })
         } else {
             const user = await User.findOne({ usernameID: req.params.id })
 
@@ -154,7 +154,7 @@ router.get('/admin/getuser/:id', auth, authAdmin, async (req, res) => {
                 return res.status(400).send({ error: 'No User Found' })
             }
             const userProfile = await Profile.findById(user._id)
-            return res.status(200).send({ userProfile, banned: user.banned })
+            return res.status(200).send({ userProfile, banned: user.banned , userID:user._id})
         }
 
 

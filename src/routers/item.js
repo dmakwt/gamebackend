@@ -2,7 +2,7 @@ const express = require('express')
 const validator = require('validator')
 const Item = require('../models/item')
 const auth = require('../middlewares/auth')
-const authAdmin = require('../middlewares/authAdmin')
+const authAdmin = require('../middlewares/authadmin')
 
 const router = new express.Router()
 
@@ -20,7 +20,7 @@ router.post('/item/createItem', auth, authAdmin, async (req, res) => {
     }
 })
 
-router.get('/item/getItem/:id', auth, async (req, res) => {
+router.get('/item/getItem/:id', auth,authAdmin, async (req, res) => {
 
     try {
         const item = await Item.findById(req.params.id)
@@ -36,28 +36,28 @@ router.get('/item/getItem/:id', auth, async (req, res) => {
 
 })
 
-// Auth admin
+
 router.patch('/item/editItem/:id', auth, authAdmin, async (req, res) => {
     try {
         const item = await Item.findByIdAndUpdate(req.params.id, req.body)
 
         if (!item) {
-            return res.status(404).send()
+            return res.status(404).send({error:'Item Not Found!'})
         }
 
         const newItem = await Item.findById(req.params.id)
 
         if (!newItem) {
-            return res.status(404).send()
+            return res.status(404).send({error:'Item Not Found!'})
         }
 
-        res.status(200).send(newItem)
+        res.status(200).send({newItem})
     } catch (error) {
-        res.status(401).send(error)
+        res.status(500).send(error)
     }
 })
 
-// Auth admin
+
 router.delete('/item/deleteItem/:id', auth, authAdmin, async (req, res) => {
     try {
         const item = await Item.findByIdAndDelete(req.params.id)
@@ -72,7 +72,7 @@ router.delete('/item/deleteItem/:id', auth, authAdmin, async (req, res) => {
     }
 })
 
-// Auth admin
+
 router.get('/item/allItems', auth, authAdmin, async (req, res) => {
     try {
         const items = await Item.find()
@@ -81,11 +81,13 @@ router.get('/item/allItems', auth, authAdmin, async (req, res) => {
             return res.status(404).send()
         }
 
-        res.status(200).send(items)
+        res.status(200).send({data:items.reverse()})
     } catch (error) {
         res.status(401).send(error)
     }
 })
+
+
 
 
 module.exports = router
