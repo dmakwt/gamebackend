@@ -39,7 +39,7 @@ router.get('/inventory/getuseritems/:id', auth, authAdmin, async (req, res) => {
 
 
         // console.log(data)
-        res.status(200).send({data})
+        res.status(200).send({data:data.reverse()})
     } catch (error) {
         res.status(500).send(error)
     }
@@ -57,7 +57,7 @@ router.post('/inventory/giveuseritem/:id', auth, authAdmin, async (req, res) => 
         }
         
         await userInventory.items.push(itemID)
-        userInventory.save()
+        await userInventory.save()
 
         res.status(200).send(userInventory)
     } catch (error) {
