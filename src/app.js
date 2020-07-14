@@ -11,7 +11,7 @@ const userRouter = require('./routers/user')
 const attackRouter = require('./routers/attack')
 const itemRouter = require('./routers/item')
 const adminRouter = require('./routers/admin')
-
+const inventoryRouter = require('./routers/inventory')
 
 const publicDirPath = path.join(__dirname, '../public')
 const viewPath = path.join(__dirname, '/views')
@@ -42,6 +42,7 @@ app.use(userRouter)
 app.use(attackRouter)
 app.use(itemRouter)
 app.use(adminRouter)
+app.use(inventoryRouter)
 
 app.use(express.static(publicDirPath))
 

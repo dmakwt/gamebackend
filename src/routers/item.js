@@ -22,7 +22,7 @@ router.post('/item/createItem', auth, authAdmin, async (req, res) => {
     }
 })
 
-router.get('/item/getItem/:id', auth, async (req, res) => {
+router.get('/item/getItem/:id', auth,authAdmin, async (req, res) => {
 
     try {
         const item = await Item.findById(req.params.id)
@@ -38,7 +38,7 @@ router.get('/item/getItem/:id', auth, async (req, res) => {
 
 })
 
-// Auth admin
+
 router.patch('/item/editItem/:id', auth, authAdmin, async (req, res) => {
     try {
         const item = await Item.findByIdAndUpdate(req.params.id, req.body)
@@ -59,7 +59,7 @@ router.patch('/item/editItem/:id', auth, authAdmin, async (req, res) => {
     }
 })
 
-// Auth admin
+
 router.delete('/item/deleteItem/:id', auth, authAdmin, async (req, res) => {
     try {
         const item = await Item.findByIdAndDelete(req.params.id)
@@ -74,7 +74,7 @@ router.delete('/item/deleteItem/:id', auth, authAdmin, async (req, res) => {
     }
 })
 
-// Auth admin
+
 router.get('/item/allItems', auth, authAdmin, async (req, res) => {
     try {
         const items = await Item.find()
@@ -88,6 +88,8 @@ router.get('/item/allItems', auth, authAdmin, async (req, res) => {
         res.status(401).send(error)
     }
 })
+
+
 
 
 module.exports = router
