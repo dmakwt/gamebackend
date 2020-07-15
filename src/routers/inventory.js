@@ -17,10 +17,10 @@ router.get('/inventory/getuseritems/:id', auth, authAdmin, async (req, res) => {
         if (!userInventory) {
             return res.status(404).send()
         }
-        
 
-        if(userInventory.items.length===0){
-             return res.status(200).send({data:[]})
+
+        if (userInventory.items.length === 0) {
+            return res.status(200).send({ data: [] })
         }
 
         let data = []
@@ -30,7 +30,7 @@ router.get('/inventory/getuseritems/:id', auth, authAdmin, async (req, res) => {
         //     data.push('1')
         // })
 
-        for(let i = 0; i < userInventory.items.length; i++) {
+        for (let i = 0; i < userInventory.items.length; i++) {
             item = await Item.findById(userInventory.items[i])
             // console.log(item)
             data.push(item)
@@ -39,7 +39,7 @@ router.get('/inventory/getuseritems/:id', auth, authAdmin, async (req, res) => {
 
 
         // console.log(data)
-        res.status(200).send({data:data.reverse()})
+        res.status(200).send({ data: data.reverse() })
     } catch (error) {
         res.status(500).send(error)
     }
@@ -49,14 +49,39 @@ router.post('/inventory/giveuseritem/:id', auth, authAdmin, async (req, res) => 
     try {
         const userID = req.params.id
         const itemID = req.body.itemid
-        
+
         const userInventory = await Inventory.findById(userID)
 
         if (!userInventory) {
             return res.status(404).send()
         }
-        
+
         await userInventory.items.push(itemID)
+        await userInventory.save()
+
+        res.status(200).send(userInventory)
+    } catch (error) {
+        res.status(500).send(error)
+    }
+})
+
+
+router.post('/inventory/takeuseritem/:id', auth, authAdmin, async (req, res) => {
+    try {
+        const userID = req.params.id
+        const itemID = req.body.itemid
+
+        const userInventory = await Inventory.findById(userID)
+
+        if (!userInventory) {
+            return res.status(404).send()
+        }
+
+        const index = userInventory.items.indexOf(itemID);
+        if (index > -1) {
+            await userInventory.items.splice(index, 1);
+        }
+        // await userInventory.items.push(itemID)
         await userInventory.save()
 
         res.status(200).send(userInventory)
