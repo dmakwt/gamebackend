@@ -1,7 +1,5 @@
 const express = require('express')
-const mongoose = require('mongoose')
 const validator = require('validator')
-const Profile = require('../models/profile')
 const Item = require('../models/item')
 const auth = require('../middlewares/auth')
 const authAdmin = require('../middlewares/authadmin')
